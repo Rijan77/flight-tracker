@@ -3,19 +3,26 @@ import 'dart:convert';
 
 class ApiService {
   static const String apiUrl = 'https://api.aviationstack.com/v1/flights?access_key=223cc312a57647ed3fd4d3d1e4da80b7';
+  static const String apiUrl2 =  'https://api.aviationstack.com/v1/flights?access_key=223cc312a57647ed3fd4d3d1e4da80b7';
 
   static Future<List<dynamic>> fetchFlights() async {
     try {
-      final response = await http.get(Uri.parse(apiUrl));
+      final responses = await Future.wait([
+      http.get(Uri.parse(apiUrl)),
+      http.get(Uri.parse(apiUrl2)),
+    ]);
 
-      if (response.statusCode == 200) {
-        // Parse the JSON response
-        final data = json.decode(response.body);
-        return data['data'] ?? []; // Return flight data list
-      } else {
-        print("Failed to load flights: ${response.statusCode}");
-        return [];
+      List<dynamic> flights =[];
+
+      for (var response in responses){
+        if(response.statusCode == 200){
+          final data = json.decode(response.body);
+          flights.addAll(data['data']??[]);
+        }else{
+          print("Failed to load flights: ${response.statusCode}");
+        }
       }
+      return flights;
     } catch (e) {
       print("An error occurred: $e");
       return [];

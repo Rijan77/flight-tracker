@@ -62,7 +62,8 @@ class _HomepageState extends State<Homepage> {
                 children: [
                   // Airline Icon
                   CircleAvatar(
-                    radius: 30,
+                    radius: 25,
+                    backgroundColor: Colors.orange,
                     child: const Icon(Icons.airplanemode_active, size: 30),
                   ),
                   const SizedBox(width: 15),
