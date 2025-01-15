@@ -2,8 +2,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  static const String apiUrl = 'https://api.aviationstack.com/v1/flights?access_key=223cc312a57647ed3fd4d3d1e4da80b7';
-  static const String apiUrl2 =  'https://api.aviationstack.com/v1/flights?access_key=223cc312a57647ed3fd4d3d1e4da80b7';
+  static const String apiUrl = 'https://api.aviationstack.com/v1/flights?access_key=a3e2b1ce7990a9b80dd58876e402b258';
+  static const String apiUrl2 = 'https://api.aviationstack.com/v1/flights?access_key=a3e2b1ce7990a9b80dd58876e402b258';
 
   static Future<List<dynamic>> fetchFlights() async {
     try {
