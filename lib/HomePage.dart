@@ -33,7 +33,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Flight Details")),
+        title: const Center(child: Text("Flight Details")),
         backgroundColor: const Color(0xff508C9B),
       ),
       body: isLoading
@@ -61,10 +61,10 @@ class _HomepageState extends State<Homepage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Airline Icon
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.orange,
-                    child: const Icon(Icons.airplanemode_active, size: 30),
+                    child: Icon(Icons.airplanemode_active, size: 30),
                   ),
                   const SizedBox(width: 15),
 
@@ -87,7 +87,7 @@ class _HomepageState extends State<Homepage> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          "Date: " + formattedDate.split('\n').first,
+                          "Date: ${formattedDate.split('\n').first}",
                           style: const TextStyle(fontSize: 14, color: Colors.black54),
                         ),
                       ],
@@ -98,7 +98,7 @@ class _HomepageState extends State<Homepage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.schedule,
                         color: Colors.green,
                       ),
