@@ -11,6 +11,25 @@ class _HomeState extends State<Home> {
   String _selectedClass = "Economy";
   final List<String> _travelClasses = ["Economy", "Business", "First Class"];
 
+  int _selectedPeople = 1;
+  final List<int> _numPeople = [1, 2, 3, 4];
+
+  DateTime _selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -23,11 +42,14 @@ class _HomeState extends State<Home> {
           const Padding(
             padding: EdgeInsets.only(top: 55),
             child: Center(
-              child: Text("Select your Flight", style: TextStyle(
+              child: Text(
+                "Select your Flight",
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 25,
-                  fontWeight: FontWeight.w600
-              ),),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           Padding(
@@ -42,8 +64,9 @@ class _HomeState extends State<Home> {
                     children: [
                       Image.asset('lib/Assets/Line.png', fit: BoxFit.fill),
                       Transform.translate(
-                          offset: const Offset(0, 15),
-                          child: Image.asset('lib/Assets/Vector.png')),
+                        offset: const Offset(0, 15),
+                        child: Image.asset('lib/Assets/Vector.png'),
+                      ),
                     ],
                   ),
                 ),
@@ -51,35 +74,90 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-
-          SizedBox(height: screenHeight *0.02,),
-
+          SizedBox(height: screenHeight * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: screenHeight * 0.06,
-                width: screenWidth *0.45,
-                decoration: BoxDecoration(
+              GestureDetector(
+                onTap: () => _selectDate(context),
+                child: Container(
+                  height: screenHeight * 0.06,
+                  width: screenWidth * 0.45,
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12, right: 15),
+                        child: Icon(
+                          Icons.calendar_month_outlined,
+                          size: 29,
+                        ),
+                      ),
+                      Text(
+                        "${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}",
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(width: screenWidth * 0.06,),
-              Container(
-                height: screenHeight * 0.06,
-                width: screenWidth *0.45,
-                decoration: BoxDecoration(
+              SizedBox(width: screenWidth * 0.06),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => SimpleDialog(
+                      children: _numPeople.map((num) {
+                        return SimpleDialogOption(
+                          onPressed: () {
+                            setState(() {
+                              _selectedPeople = num;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text("$num passenger"),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: screenHeight * 0.06,
+                  width: screenWidth * 0.45,
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12, right: 15),
+                        child: Icon(
+                          Icons.people_alt_rounded,
+                          size: 28,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        "$_selectedPeople passenger",
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-
-          SizedBox(height: screenHeight *0.03,),
-
-          // Updated Dropdown Section with reduced spacing
+          SizedBox(height: screenHeight * 0.03),
           Container(
             height: screenHeight * 0.06,
             width: screenWidth * 0.6,
@@ -98,13 +176,14 @@ class _HomeState extends State<Home> {
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
-              items: _travelClasses.map<DropdownMenuItem<String>>((String value) {
+              items: _travelClasses
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Row(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(left: 13), // Reduced left padding
+                        padding: EdgeInsets.only(left: 13),
                         child: Icon(
                           Icons.arrow_drop_down_circle_outlined,
                           size: 28,
@@ -113,7 +192,7 @@ class _HomeState extends State<Home> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 30), // Added right padding to balance the text
+                          padding: const EdgeInsets.only(right: 30),
                           child: Text(
                             value,
                             textAlign: TextAlign.center,
@@ -136,23 +215,95 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
-
           SizedBox(height: screenHeight * 0.02),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              itemCount: 20 ,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        "lib/Assets/Subtract.png",
+                        width: double.infinity,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15, left: 30),
+                            child: Row(
+                              children: [
+                                Text("7:05 AM", style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 19
+                                ),),
+                                SizedBox(width: screenWidth * 0.17,),
+                                Image.asset("lib/Assets/Vector1.png"),
+                                SizedBox(width: screenWidth * 0.17,),
+                                Text("8:05 PM", style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 19
+                                ),)
+                                
+                              ],
 
-          Expanded(child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              itemCount: 10,
-              itemBuilder: (context, index){
-                return Padding(padding: EdgeInsets.only(bottom: 16),
-                
-                  child: Image.asset("lib/Assets/Subtract.png",
-                  width: double.infinity,fit: BoxFit.fitWidth
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 45),
+                                child: Text("USA", style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16
+                                ),),
+                              ),
+                              SizedBox(width: screenWidth * 0.21,),
+                              Text("13:00", style: TextStyle(
+                                fontSize: 16
+                              ),),
+                              SizedBox(width: screenWidth * 0.2,),
+                              Text("ETH", style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16
+                              ),)
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Text("Air Canada", style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600
+                                ),),
+                              ),
+                              SizedBox(width: screenWidth * 0.4,),
+                              Text("\$ 10000", style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),)
+                            ],
+                          )
+                        ],
+                      )
+                    ],
                   ),
-
                 );
-                    
-            
-          }))
+              },
+            ),
+          ),
         ],
       ),
     );
