@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../HomePage.dart';
+import 'Home.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -75,7 +76,7 @@ class _OnbordingState extends State<Onboarding> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Homepage()),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Home()),
                             );
                           },
                           child: Container(

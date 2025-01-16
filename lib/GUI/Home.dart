@@ -37,23 +37,41 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       backgroundColor: const Color(0xff7E9DCB),
+      appBar: AppBar(
+        backgroundColor: const Color(0xff7E9DCB),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_sharp, color: Colors.black, size: 35,),
+          onPressed: () {
+            Navigator.pop(context); // Navigate to the previous screen
+          },
+        ),
+        title: const Text(
+          "Select your Flight",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 55),
-            child: Center(
-              child: Text(
-                "Select your Flight",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.only(top: 55),
+          //   child: Center(
+          //     child: Text(
+          //       "Select your Flight",
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 25,
+          //         fontWeight: FontWeight.w600,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+            padding: const EdgeInsets.only(top: 7, left: 10, right: 10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -86,6 +104,9 @@ class _HomeState extends State<Home> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                          color: Colors.black54
+                      )
                   ),
                   child: Row(
                     children: [
@@ -133,6 +154,9 @@ class _HomeState extends State<Home> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Colors.black54
+                    )
                   ),
                   child: Row(
                     children: [
@@ -157,13 +181,17 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          SizedBox(height: screenHeight * 0.03),
+          SizedBox(height: screenHeight * 0.026),
           Container(
             height: screenHeight * 0.06,
             width: screenWidth * 0.6,
             decoration: BoxDecoration(
               color: const Color(0xff2B7DBF),
               borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                    color: Colors.black54,
+                  width: 1.2
+                )
             ),
             child: DropdownButton<String>(
               value: _selectedClass,
