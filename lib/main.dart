@@ -1,5 +1,4 @@
  import 'package:flutter/material.dart';
-import 'GUI/Home.dart';
 import 'GUI/Splash_Screen.dart';
 
 

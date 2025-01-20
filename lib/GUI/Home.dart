@@ -266,14 +266,14 @@ class _HomeState extends State<Home> {
                             padding: const EdgeInsets.only(top: 15, left: 30),
                             child: Row(
                               children: [
-                                Text("7:05 AM", style: TextStyle(
+                                const Text("7:05 AM", style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 19
                                 ),),
                                 SizedBox(width: screenWidth * 0.17,),
                                 Image.asset("lib/Assets/Vector1.png"),
                                 SizedBox(width: screenWidth * 0.17,),
-                                Text("8:05 PM", style: TextStyle(
+                                const Text("8:05 PM", style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 19
                                 ),)
@@ -284,8 +284,8 @@ class _HomeState extends State<Home> {
                           ),
                           Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 45),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 45),
                                 child: Text("USA", style: TextStyle(
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700,
@@ -293,18 +293,18 @@ class _HomeState extends State<Home> {
                                 ),),
                               ),
                               SizedBox(width: screenWidth * 0.21,),
-                              Text("13:00", style: TextStyle(
+                              const Text("13:00", style: TextStyle(
                                 fontSize: 16
                               ),),
                               SizedBox(width: screenWidth * 0.2,),
-                              Text("ETH", style: TextStyle(
+                              const Text("ETH", style: TextStyle(
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16
                               ),)
                             ],
                           ),
-                          Divider(
+                          const Divider(
                             color: Colors.grey,
                             thickness: 1,
                             indent: 15,
@@ -312,15 +312,15 @@ class _HomeState extends State<Home> {
                           ),
                           Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 25),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 25),
                                 child: Text("Air Canada", style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600
                                 ),),
                               ),
                               SizedBox(width: screenWidth * 0.4,),
-                              Text("\$ 10000", style: TextStyle(
+                              const Text("\$ 10000", style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),)
