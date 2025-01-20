@@ -193,6 +193,8 @@ class _HomeState extends State<Home> {
                   width: 1.2
                 )
             ),
+
+
             child: DropdownButton<String>(
               value: _selectedClass,
               dropdownColor: const Color(0xff2B7DBF),
