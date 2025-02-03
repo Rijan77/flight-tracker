@@ -25,7 +25,7 @@ class ApiService {
       }
       return flights;
     } catch (e) {
-      print("error occurred: $e");
+      print("An error occurred: $e");
       return [];
     }
   }
