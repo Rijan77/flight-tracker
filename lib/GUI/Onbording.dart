@@ -1,3 +1,4 @@
+import 'package:flight_app/GUI/user_auth/LoginPage.dart';
 import 'package:flutter/material.dart';
 
 import 'Home.dart';
@@ -75,7 +76,7 @@ class _OnbordingState extends State<Onboarding> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Home()),
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()),
                             );
                           },
                           child: Container(
