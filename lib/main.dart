@@ -1,9 +1,5 @@
-import 'package:flight_app/GUI/user_auth/LoginPage.dart';
-import 'package:flight_app/GUI/user_auth/RegistrationPage.dart';
 import 'package:flutter/material.dart';
-import 'GUI/Home.dart';
 import 'GUI/Splash_Screen.dart';
-import 'HomePage.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,7 +1,6 @@
 import 'package:flight_app/GUI/user_auth/LoginPage.dart';
 import 'package:flutter/material.dart';
 
-import 'Home.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
