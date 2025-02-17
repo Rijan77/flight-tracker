@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: SlideTransition(
               position: _animation,
               child: Image.asset(
-                "lib/Assets/airplane.png",
+                "lib/Assets/airplane2.png",
               ),
             ),
           ),
