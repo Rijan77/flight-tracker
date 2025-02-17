@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "815303210928",
+    "project_id": "skybook-9e1ec",
+    "storage_bucket": "skybook-9e1ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815303210928:android:f5064fb0eb37f76d638875",
+        "android_client_info": {
+          "package_name": "com.example.flight_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAppHlpE3PxdHVqz03F0l2cTi_Y6ZmNAFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
