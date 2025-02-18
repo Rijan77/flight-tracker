@@ -14,6 +14,7 @@ class _HomeState extends State<Home> {
   int _selectedPeople = 1;
   final List<int> _numPeople = [1, 2, 3, 4];
 
+
   DateTime _selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -45,6 +46,7 @@ class _HomeState extends State<Home> {
             Navigator.pop(context); // Navigate to the previous screen
           },
         ),
+
         title: const Text(
           "Select your Flight",
           style: TextStyle(
@@ -70,6 +72,7 @@ class _HomeState extends State<Home> {
           //     ),
           //   ),
           // ),
+
           Padding(
             padding: const EdgeInsets.only(top: 7, left: 10, right: 10),
             child: Row(

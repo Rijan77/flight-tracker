@@ -10,6 +10,7 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
+
 class _HomepageState extends State<Homepage> {
   List flights = [];
   bool isLoading = true;
@@ -20,6 +21,7 @@ class _HomepageState extends State<Homepage> {
     loadFlights();
   }
 
+
   Future<void> loadFlights() async {
     final fetchFlights = await ApiService.fetchFlights();
 
@@ -28,6 +30,7 @@ class _HomepageState extends State<Homepage> {
       isLoading = false;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
