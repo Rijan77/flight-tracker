@@ -45,6 +45,7 @@ class _HomeState extends State<Home> {
             Navigator.pop(context); // Navigate to the previous screen
           },
         ),
+
         title: const Text(
           "Select your Flight",
           style: TextStyle(
@@ -70,6 +71,7 @@ class _HomeState extends State<Home> {
           //     ),
           //   ),
           // ),
+
           Padding(
             padding: const EdgeInsets.only(top: 7, left: 10, right: 10),
             child: Row(
