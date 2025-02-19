@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: screenHeight * 0.43), // To create space for the fixed logo
+                SizedBox(height: screenHeight * 0.44), // To create space for the fixed logo
                 Center(
                   child: Column(
                     children: [
@@ -49,18 +49,18 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white,
                         ),
                       ),
-                      Text(
-                        "Sign in to continue.",
-                        style: TextStyle(
-                          fontSize: screenHeight * 0.02,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
+                      // Text(
+                      //   "Sign in to continue.",
+                      //   style: TextStyle(
+                      //     fontSize: screenHeight * 0.02,
+                      //     fontWeight: FontWeight.w600,
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.05),
+                SizedBox(height: screenHeight * 0.044),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                   child: TextField(
@@ -143,7 +143,22 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.03),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 200, top: 10),
+                      child: InkWell(
+                        onTap: (){},
+                        child: Text("Forgot Password?", style: TextStyle(
+                          fontSize: screenHeight * 0.02,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.italic
+                        ),),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.037),
                 FractionallySizedBox(
                   widthFactor: 0.75,
                   child: Container(
@@ -167,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                 // SizedBox(height: screenHeight * 0.02),
                 const Text(
                   "OR",
-                  style: TextStyle(fontWeight: FontWeight.w800),
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.75,
