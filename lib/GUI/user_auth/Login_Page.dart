@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,7 +46,6 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: screenHeight * 0.01),
                       Text(
                         "Sign in to continue.",
                         style: TextStyle(
@@ -59,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.04),
+                SizedBox(height: screenHeight * 0.05),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                   child: TextField(
@@ -198,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't Have Account ? ",
+                      "Don't Have Account? ",
                       style: TextStyle(
                         fontSize: screenHeight * 0.018,
                         fontWeight: FontWeight.w600,
