@@ -280,7 +280,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             child: Text(
                               "LOGIN",
                               style: TextStyle(
-                                color: Colors.yellow,
+                                color: Colors.orange,
                                 fontWeight: FontWeight.w700,
                                 fontSize: screenHeight * 0.018,
                               ),
