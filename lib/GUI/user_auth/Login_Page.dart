@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'RegistrationPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,18 +24,20 @@ class _LoginPageState extends State<LoginPage> {
             "lib/Assets/Main3.png",
             fit: BoxFit.cover,
           ),
+          // Fixed Logo
+          Positioned(
+            top: screenHeight * 0.013, // Adjust the position as needed
+            right: screenWidth * 0.66, // Adjust for proper alignment
+            child: Image.asset(
+              "lib/Assets/Logo-bg.png",
+              width: screenWidth * 0.4,
+              height: screenHeight * 0.15,
+            ),
+          ),
           SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(right: screenWidth * 0.73,),
-                  child: Image.asset(
-                    "lib/Assets/Logo-bg.png",
-                    width: screenWidth * 0.6,
-                    height: screenHeight * 0.2,
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.231),
+                SizedBox(height: screenHeight * 0.43), // To create space for the fixed logo
                 Center(
                   child: Column(
                     children: [
@@ -142,11 +145,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: screenHeight * 0.03),
                 FractionallySizedBox(
-                  widthFactor: 0.6,
+                  widthFactor: 0.75,
                   child: Container(
                     height: screenHeight * 0.065,
                     decoration: BoxDecoration(
-                      color: Colors.yellow,
+                      color: Colors.orange,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: Colors.black54, width: 1.5),
                     ),
@@ -161,7 +164,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.02),
+                // SizedBox(height: screenHeight * 0.02),
+                const Text(
+                  "OR",
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
                 FractionallySizedBox(
                   widthFactor: 0.75,
                   child: Container(
@@ -191,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.04),
+                SizedBox(height: screenHeight * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -203,7 +210,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const RegistrationPage()),
+                        );
+                      },
                       child: Text(
                         "SIGNUP",
                         style: TextStyle(
