@@ -1,4 +1,6 @@
+import 'package:flight_app/GUI/user_auth/ForgotPassword.dart';
 import 'package:flutter/material.dart';
+import '../Home.dart';
 import 'RegistrationPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -148,7 +150,9 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 200, top: 10),
                       child: InkWell(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgotpassword()));
+                        },
                         child: Text("Forgot Password?", style: TextStyle(
                           fontSize: screenHeight * 0.02,
                           fontWeight: FontWeight.w500,
@@ -161,19 +165,25 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: screenHeight * 0.037),
                 FractionallySizedBox(
                   widthFactor: 0.75,
-                  child: Container(
-                    height: screenHeight * 0.065,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black54, width: 1.5),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                          fontSize: screenHeight * 0.025,
-                          fontWeight: FontWeight.w600,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                    }
+                    ,
+                    child: Container(
+                      height: screenHeight * 0.065,
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.black54, width: 1.5),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.025,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -234,7 +244,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         "SIGNUP",
                         style: TextStyle(
-                          color: Colors.yellow,
+                          color: Colors.orange,
                           fontWeight: FontWeight.w700,
                           fontSize: screenHeight * 0.018,
                         ),
