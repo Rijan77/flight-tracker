@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'GUI/user_auth/ForgotPassword.dart';
 import 'GUI/user_auth/Login_Page.dart';
 
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: Forgotpassword(),
     );
   }
 }
