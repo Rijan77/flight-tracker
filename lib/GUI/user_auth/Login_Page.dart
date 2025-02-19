@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(left: 200, top: 10),
                       child: InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgotpassword()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const Forgotpassword()));
                         },
                         child: Text("Forgot Password?", style: TextStyle(
                           fontSize: screenHeight * 0.02,
@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                   widthFactor: 0.75,
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Home()));
                     }
                     ,
                     child: Container(

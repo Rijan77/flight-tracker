@@ -51,7 +51,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                         hintText: "@gmail.com",
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(width: 1.7, color: Colors.grey, )
+                          borderSide: const BorderSide(width: 1.7, color: Colors.grey, )
 
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -72,7 +72,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                   height: screenHeight * 0.2,
                   decoration: BoxDecoration(
                     color: Colors.blueGrey.shade200,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30) )
+                    borderRadius: const BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30) )
                   ),
                   child: Center(
                     child:
