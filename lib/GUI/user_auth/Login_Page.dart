@@ -1,6 +1,9 @@
 import 'package:flight_app/GUI/user_auth/ForgotPassword.dart';
 import 'package:flutter/material.dart';
+import '../CustomDialog.dart';
 import '../Home.dart';
+import 'Auth_Helper.dart';
+import 'Auth_Service.dart';
 import 'RegistrationPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,7 +14,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final _auth = AuthService();
+  final AuthHelper _authHelper = AuthHelper();
   bool _isPasswordVisible = false;
+  bool _isLogin = false;
+
+  final _email = TextEditingController();
+  final _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                   child: TextField(
+                    controller: _email,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -102,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                   child: TextField(
+                    controller: _password,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       filled: true,
@@ -166,10 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                 FractionallySizedBox(
                   widthFactor: 0.75,
                   child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Home()));
-                    }
-                    ,
+                      onTap: _login,
                     child: Container(
                       height: screenHeight * 0.065,
                       decoration: BoxDecoration(
@@ -259,4 +268,71 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+  _login() async {
+    if (_email.text.isEmpty || _password.text.isEmpty) {
+      CustomDialog.showSnackBar(
+        context: context,
+        message: "Email and Password cannot be empty.",
+      );
+      return;
+    }
+
+    if (!_email.text.contains("@")) {
+      CustomDialog.showSnackBar(
+        context: context,
+        message: "Please enter a valid email address.",
+      );
+      return;
+    }
+
+    setState(() {
+      _isLogin = true;
+    });
+
+    try {
+      final user = await _auth.loginUserWithEmailAndPassword(
+        _email.text.trim(),
+        _password.text.trim(),
+      );
+
+      if (user != null) {
+        if (!user.emailVerified) {
+          CustomDialog.showSnackBar(
+            context: context,
+            message: "Please verify your email. A new verification link has been sent to your email.",
+          );
+          await _auth.sendEmailVerificationLink();
+          return;
+        }
+
+        CustomDialog.showSuccessDialog(
+          context: context,
+          title: "Welcome Back!",
+          message: "You have successfully logged in.",
+          onConfirm: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Home()),
+            );
+          },
+        );
+      } else {
+        CustomDialog.showSnackBar(
+          context: context,
+          message: "Login failed. Please check your credentials and try again.",
+        );
+      }
+    } catch (e) {
+      CustomDialog.showSnackBar(
+        context: context,
+        message: "An error occurred: ${e.toString()}",
+      );
+    }finally{
+      setState(() {
+        _isLogin = false;
+      });
+    }
+  }
+
 }
