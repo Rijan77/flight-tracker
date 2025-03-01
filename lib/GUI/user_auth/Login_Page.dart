@@ -289,9 +289,11 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+
     setState(() {
       _isLogin = true;
     });
+
 
     try {
       final user = await _auth.loginUserWithEmailAndPassword(
