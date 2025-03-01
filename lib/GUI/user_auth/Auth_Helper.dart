@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../Home.dart';
 import 'auth_service.dart';
 import '../CustomDialog.dart';
-import '../../homePage.dart';
 
 class AuthHelper {
   final AuthService _auth = AuthService();
