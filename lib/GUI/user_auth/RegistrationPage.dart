@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../CustomDialog.dart';
+import 'Auth_Service.dart';
 import 'Login_Page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -11,6 +13,13 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   bool _isPasswordVisible = false;
+
+  final _name = TextEditingController();
+  final _number = TextEditingController();
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+
+  final _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +57,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                         child: TextField(
+                          controller: _name,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -85,6 +95,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                         child: TextField(
+                          controller: _number,
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                             filled: true,
@@ -123,6 +134,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                         child: TextField(
+                          controller: _email,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -160,6 +172,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
                         child: TextField(
+                          controller: _password,
                           obscureText: !_isPasswordVisible,
                           decoration: InputDecoration(
                             filled: true,
@@ -205,21 +218,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       SizedBox(height: screenHeight * 0.03),
                       // Sign Up Button
-                      FractionallySizedBox(
-                        widthFactor: 0.75,
-                        child: Container(
-                          height: screenHeight * 0.065,
-                          decoration: BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.black54, width: 1.5),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "SIGN UP",
-                              style: TextStyle(
-                                fontSize: screenHeight * 0.025,
-                                fontWeight: FontWeight.w600,
+                      InkWell(
+                        onTap: _signup,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.75,
+                          child: Container(
+                            height: screenHeight * 0.065,
+                            decoration: BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.black54, width: 1.5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "SIGN UP",
+                                style: TextStyle(
+                                  fontSize: screenHeight * 0.025,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ),
@@ -297,5 +313,52 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ],
       ),
     );
+  }
+
+  _signup() async {
+    if (_email.text.isEmpty || _password.text.isEmpty) {
+      CustomDialog.showSnackBar(
+          context: context, message: "Email and Password cannot be empty");
+      return;
+    }
+
+    if (!_email.text.contains("@gmail.com")) {
+      CustomDialog.showSnackBar(
+          context: context, message: "Please enter a valid email address.");
+      return;
+    }
+
+    if (_password.text.length < 6) {
+      CustomDialog.showSnackBar(
+          context: context, message: "Password must be at least 6 characters.");
+      return;
+    }
+
+    try {
+      final user = await _auth.createUserWithEmailAndPassword(
+          _email.text, _password.text);
+
+      if (user != null) {
+        // Send email verification link
+        await _auth.sendEmailVerificationLink();
+
+        CustomDialog.showSuccessDialog(
+          context: context,
+          title: "Verify Your Email",
+          message:
+          "A verification link has been sent to your email address. Please verify your email before logging in.",
+          onConfirm: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          },
+        );
+      }
+    } on Exception catch (e) {
+      CustomDialog.showSnackBar(
+          context: context,
+          message: e.toString().replaceFirst('Exception: ', ''));
+    }
   }
 }

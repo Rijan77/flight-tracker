@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _auth = AuthService();
   final AuthHelper _authHelper = AuthHelper();
   bool _isPasswordVisible = false;
+  bool _isGoogleLoading = false;
   bool _isLogin = false;
 
   final _email = TextEditingController();
@@ -203,32 +204,35 @@ class _LoginPageState extends State<LoginPage> {
                   "OR",
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                FractionallySizedBox(
-                  widthFactor: 0.75,
-                  child: Container(
-                    height: screenHeight * 0.065,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black54, width: 1.5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "lib/Assets/Google Logo.png",
-                          height: screenHeight * 0.05,
-                          width: screenHeight * 0.05,
-                        ),
-                        SizedBox(width: screenWidth * 0.02),
-                        Text(
-                          "Continue with Google",
-                          style: TextStyle(
-                            fontSize: screenHeight * 0.02,
-                            fontWeight: FontWeight.w600,
+                InkWell(
+                  onTap: _loginWithGoogle,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.75,
+                    child: Container(
+                      height: screenHeight * 0.065,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.black54, width: 1.5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "lib/Assets/Google Logo.png",
+                            height: screenHeight * 0.05,
+                            width: screenHeight * 0.05,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: screenWidth * 0.02),
+                          Text(
+                            "Continue with Google",
+                            style: TextStyle(
+                              fontSize: screenHeight * 0.02,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -332,6 +336,48 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLogin = false;
       });
+    }
+  }
+
+  _loginWithGoogle() async {
+    setState(() {
+      _isGoogleLoading = true;
+    });
+
+    try {
+      final user = await _auth.loginWithGoogle();
+
+      setState(() {
+        _isGoogleLoading = false;
+      });
+
+      if (user != null) {
+        CustomDialog.showSuccessDialog(
+          context: context,
+          title: "Welcome Back!",
+          message: "You have successfully signed in with Google.",
+          onConfirm: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Home()),
+            );
+          },
+        );
+      } else {
+        CustomDialog.showSnackBar(
+          context: context,
+          message: "Login was unsuccessful. Please check your credentials and try again.",
+        );
+      }
+    } catch (e) {
+      setState(() {
+        _isGoogleLoading = false;
+      });
+      CustomDialog.showSnackBar(
+        context: context,
+        message: "Google Login failed. Please try again later.",
+      );
     }
   }
 
