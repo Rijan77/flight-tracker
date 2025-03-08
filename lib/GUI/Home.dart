@@ -284,8 +284,6 @@ class _HomeState extends State<Home> {
 
                             ),
                           ),
-
-
                           Row(
                             children: [
                               const Padding(
