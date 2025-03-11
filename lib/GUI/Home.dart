@@ -14,7 +14,6 @@ class _HomeState extends State<Home> {
   String _selectedClass = "Economy";
   final List<String> _travelClasses = ["Economy", "Business", "First Class"];
 
-
   int _selectedPeople = 1;
   final List<int> _numPeople = [1, 2, 3, 4];
 
