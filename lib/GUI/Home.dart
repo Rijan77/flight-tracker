@@ -1,4 +1,7 @@
+import 'package:flight_app/API/Static.dart';
 import 'package:flutter/material.dart';
+
+import '../API/Model.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,6 +19,9 @@ class _HomeState extends State<Home> {
 
   DateTime _selectedDate = DateTime.now();
 
+  List<Data> _flight = [];
+  bool _isLoading = true;
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -28,6 +34,22 @@ class _HomeState extends State<Home> {
         _selectedDate = picked;
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchFlights();
+  }
+
+  Future<void> _fetchFlights() async{
+    List<Data> flights = await ApiService.fetchFlights();
+    print("Fetched Flights: $flights");
+    setState(() {
+      _flight = flights;
+      _isLoading = false;
+    });
   }
 
   @override
@@ -249,10 +271,12 @@ class _HomeState extends State<Home> {
           ),
           SizedBox(height: screenHeight * 0.02),
           Expanded(
-            child: ListView.builder(
+            child: _isLoading ? Center(child: CircularProgressIndicator(),)
+            : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              itemCount: 20 ,
+              itemCount: _flight.length,
               itemBuilder: (context, index) {
+                final flight = _flight[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Stack(
@@ -268,14 +292,14 @@ class _HomeState extends State<Home> {
                             padding: const EdgeInsets.only(top: 15, left: 30),
                             child: Row(
                               children: [
-                                const Text("7:05 AM", style: TextStyle(
+                                Text(flight.departure.scheduled ?? 'Unknown', style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 19
                                 ),),
                                 SizedBox(width: screenWidth * 0.17,),
                                 Image.asset("lib/Assets/Vector1.png"),
                                 SizedBox(width: screenWidth * 0.17,),
-                                const Text("8:05 PM", style: TextStyle(
+                                Text(flight.arrival.scheduled ?? 'Unknown', style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 19
                                 ),)
@@ -286,20 +310,20 @@ class _HomeState extends State<Home> {
                           ),
                           Row(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 45),
-                                child: Text("USA", style: TextStyle(
+                              Padding(
+                                padding: const EdgeInsets.only(left: 45),
+                                child: Text(flight.departure.airport ?? 'Unknown', style: const TextStyle(
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16
                                 ),),
                               ),
                               SizedBox(width: screenWidth * 0.21,),
-                              const Text("13:00", style: TextStyle(
+                              Text(flight.departure.estimatedRunway ?? 'Unknown', style: const TextStyle(
                                 fontSize: 16
                               ),),
                               SizedBox(width: screenWidth * 0.2,),
-                              const Text("ETH", style: TextStyle(
+                              Text(flight.arrival.airport ?? 'Unknown', style: const TextStyle(
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16
@@ -314,15 +338,15 @@ class _HomeState extends State<Home> {
                           ),
                           Row(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 25),
-                                child: Text("Air Canada", style: TextStyle(
+                              Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Text(flight.airline.name ?? 'Unknown', style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600
                                 ),),
                               ),
                               SizedBox(width: screenWidth * 0.4,),
-                              const Text("\$ 10000", style: TextStyle(
+                               Text("\$ ${flight.flight.number.toString()}", style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),)

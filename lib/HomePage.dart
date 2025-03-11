@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'Static.dart';
+import 'API/Static.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
