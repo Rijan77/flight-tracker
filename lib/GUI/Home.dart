@@ -16,7 +16,6 @@ class _HomeState extends State<Home> {
 
   int _selectedPeople = 1;
   final List<int> _numPeople = [1, 2, 3, 4];
-
   DateTime _selectedDate = DateTime.now();
 
   List<Data> _flight = [];
