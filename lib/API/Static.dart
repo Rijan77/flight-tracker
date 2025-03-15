@@ -11,25 +11,27 @@ class ApiService {
     try {
       final response = await http.get(Uri.parse(apiUrl));
 
-      print("API Response: ${response.body}");
+      print("API Status Code: ${response.statusCode}");
+      print("API Raw Response: ${response.body}");
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
-        print(jsonData);
+        print("Decoded JSON: $jsonData");
 
-        // Assuming the response contains a 'data' field that is a list of flights
-        List<Data> flights = (jsonData['data'] as List)
-            .map((flightJson) => Data.fromJson(flightJson))
-            .toList();
-
-        return flights;
+        if (jsonData is Map<String, dynamic> && jsonData.containsKey('data')) {
+          return (jsonData['data'] as List)
+              .map<Data>((item) => Data.fromJson(item))
+              .toList();
+        } else {
+          print("Unexpected JSON format: $jsonData");
+        }
       } else {
         print("Failed to load flights: ${response.statusCode}");
-        return [];
       }
     } catch (e) {
       print("An error occurred: $e");
-      return [];
     }
+
+    return [];
   }
 }

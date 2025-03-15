@@ -291,14 +291,14 @@ class _HomeState extends State<Home> {
                             padding: const EdgeInsets.only(top: 15, left: 30),
                             child: Row(
                               children: [
-                                Text(flight.departure.scheduled ?? 'Unknown', style: const TextStyle(
+                                Text( flight.departure.airport, style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 19
                                 ),),
                                 SizedBox(width: screenWidth * 0.17,),
                                 Image.asset("lib/Assets/Vector1.png"),
                                 SizedBox(width: screenWidth * 0.17,),
-                                Text(flight.arrival.scheduled ?? 'Unknown', style: const TextStyle(
+                                Text(flight.arrival.airport?? "Unknown", style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 19
                                 ),)
@@ -311,18 +311,18 @@ class _HomeState extends State<Home> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 45),
-                                child: Text(flight.departure.airport ?? 'Unknown', style: const TextStyle(
+                                child: Text(flight.departure.airport, style: const TextStyle(
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16
                                 ),),
                               ),
                               SizedBox(width: screenWidth * 0.21,),
-                              Text(flight.departure.estimatedRunway ?? 'Unknown', style: const TextStyle(
+                              Text(flight.departure.airport, style: const TextStyle(
                                 fontSize: 16
                               ),),
                               SizedBox(width: screenWidth * 0.2,),
-                              Text(flight.arrival.airport ?? 'Unknown', style: const TextStyle(
+                              Text(flight.arrival.airport?? "Unknow", style: const TextStyle(
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16
@@ -339,13 +339,13 @@ class _HomeState extends State<Home> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 25),
-                                child: Text(flight.airline.name ?? 'Unknown', style: const TextStyle(
+                                child: Text(flight.airline.name, style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600
                                 ),),
                               ),
                               SizedBox(width: screenWidth * 0.4,),
-                               Text("\$ ${flight.flight.number.toString()}", style: TextStyle(
+                               Text(flight.departure.airport, style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),)

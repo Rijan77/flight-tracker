@@ -41,14 +41,16 @@ class Data {
   });
 
   Data.fromJson(Map<String, dynamic> json)
-      : flightDate = json['flight_date'],
-        flightStatus = json['flight_status'],
+      : flightDate = json['flight_date']?.toString() ?? 'Unknown',
+        flightStatus = json['flight_status']?.toString() ?? 'Unknown',
         departure = Departure.fromJson(json['departure']),
         arrival = Arrival.fromJson(json['arrival']),
         airline = Airline.fromJson(json['airline']),
         flight = Flight.fromJson(json['flight']),
-        aircraft = json['aircraft'],
-        live = json['live'];
+        aircraft = json['aircraft']?.toString(),
+        live = json['live']?.toString() {
+    print('Parsed Data: flightDate=$flightDate, flightStatus=$flightStatus, aircraft=$aircraft, live=$live');
+  }
 
   final String flightDate;
   final String flightStatus;
@@ -103,10 +105,10 @@ class Flight {
   });
 
   Flight.fromJson(Map<String, dynamic> json)
-      : number = json['number'] as int,
-        iata = json['iata'] as String,
-        icao = json['icao'] as String,
-        codeshared = json['codeshared'];
+      : number = int.tryParse(json['number']?.toString() ?? '0') ?? 0,
+        iata = json['iata']?.toString() ?? 'Unknown',
+        icao = json['icao']?.toString() ?? 'Unknown',
+        codeshared = json['codeshared']?.toString();
 
   final int number;
   final String iata;
@@ -128,7 +130,7 @@ class Flight {
 
   Map<String, dynamic> toJson() {
     return {
-      'number': number,
+      'number': number.toString(),
       'iata': iata,
       'icao': icao,
       'codeshared': codeshared,
@@ -175,48 +177,50 @@ class Airline {
 class Arrival {
   Arrival({
     required this.airport,
-    required this.timezone,
+    this.timezone, // Make timezone nullable
     required this.iata,
     required this.icao,
     required this.terminal,
     this.gate,
     this.baggage,
-    required this.delay,
+    this.delay,
     required this.scheduled,
     this.estimated,
-    required this.actual,
-    required this.estimatedRunway,
-    required this.actualRunway,
+    this.actual,
+    this.estimatedRunway,
+    this.actualRunway,
   });
 
   Arrival.fromJson(Map<String, dynamic> json)
-      : airport = json['airport'],
-        timezone = json['timezone'],
-        iata = json['iata'],
-        icao = json['icao'],
-        terminal = json['terminal'],
-        gate = json['gate'],
-        baggage = json['baggage'],
-        delay = json['delay'],
-        scheduled = json['scheduled'],
-        estimated = json['estimated'],
-        actual = json['actual'],
-        estimatedRunway = json['estimated_runway'],
-        actualRunway = json['actual_runway'];
+      : airport = json['airport']?.toString() ?? 'Unknown',
+        timezone = json['timezone']?.toString()?? "Unknown", // Handle null
+        iata = json['iata']?.toString() ?? 'Unknown',
+        icao = json['icao']?.toString() ?? 'Unknown',
+        terminal = json['terminal']?.toString() ?? 'Unknown',
+        gate = json['gate']?.toString(),
+        baggage = json['baggage']?.toString(),
+        delay = json['delay']?.toString(),
+        scheduled = json['scheduled']?.toString() ?? 'Unknown',
+        estimated = json['estimated']?.toString(),
+        actual = json['actual']?.toString(),
+        estimatedRunway = json['estimated_runway']?.toString(),
+        actualRunway = json['actual_runway']?.toString() {
+    print('Parsed Arrival: airport=$airport, timezone=$timezone, iata=$iata, icao=$icao, terminal=$terminal, gate=$gate, baggage=$baggage, delay=$delay, scheduled=$scheduled, estimated=$estimated, actual=$actual, estimatedRunway=$estimatedRunway, actualRunway=$actualRunway');
+  }
 
-  final String airport;
-  final String timezone;
-  final String iata;
-  final String icao;
-  final String terminal;
+  final String? airport;
+  final String? timezone; // Make timezone nullable
+  final String? iata;
+  final String? icao;
+  final String? terminal;
   final String? gate;
   final String? baggage;
-  final num delay;
-  final String scheduled;
+  final String? delay;
+  final String? scheduled;
   final String? estimated;
-  final String actual;
-  final String estimatedRunway;
-  final String actualRunway;
+  final String? actual;
+  final String? estimatedRunway;
+  final String? actualRunway;
 
   Arrival copyWith({
     String? airport,
@@ -226,7 +230,7 @@ class Arrival {
     String? terminal,
     String? gate,
     String? baggage,
-    num? delay,
+    String? delay,
     String? scheduled,
     String? estimated,
     String? actual,
@@ -271,45 +275,47 @@ class Arrival {
 class Departure {
   Departure({
     required this.airport,
-    required this.timezone,
+    this.timezone, // Make timezone nullable
     required this.iata,
     required this.icao,
     this.terminal,
     this.gate,
     this.delay,
     required this.scheduled,
-    required this.estimated,
-    required this.actual,
-    required this.estimatedRunway,
-    required this.actualRunway,
+    this.estimated,
+    this.actual,
+    this.estimatedRunway,
+    this.actualRunway,
   });
 
   Departure.fromJson(Map<String, dynamic> json)
-      : airport = json['airport'] ?? 'Unknown',
-        timezone = json['timezone']?? 'Unknown',
-        iata = json['iata']?? 'Unknown',
-        icao = json['icao']?? 'Unknown',
-        terminal = json['terminal']?? 'Unknown',
-        gate = json['gate']?? 0,
-        delay = json['delay']?? 'Unknown',
-        scheduled = json['scheduled']?? 0,
-        estimated = json['estimated']?? 'Unknown',
-        actual = json['actual']?? 'Unknown',
-        estimatedRunway = json['estimated_runway']?? 'Unknown',
-        actualRunway = json['actual_runway']?? 'Unknown';
+      : airport = json['airport']?.toString() ?? 'Unknown',
+        timezone = json['timezone']?.toString()?? "Unknown", // Handle null
+        iata = json['iata']?.toString() ?? 'Unknown',
+        icao = json['icao']?.toString() ?? 'Unknown',
+        terminal = json['terminal']?.toString(),
+        gate = json['gate']?.toString(),
+        delay = json['delay']?.toString(),
+        scheduled = json['scheduled']?.toString() ?? 'Unknown',
+        estimated = json['estimated']?.toString(),
+        actual = json['actual']?.toString(),
+        estimatedRunway = json['estimated_runway']?.toString(),
+        actualRunway = json['actual_runway']?.toString() {
+    print('Parsed Departure: airport=$airport, timezone=$timezone, iata=$iata, icao=$icao, terminal=$terminal, gate=$gate, delay=$delay, scheduled=$scheduled, estimated=$estimated, actual=$actual, estimatedRunway=$estimatedRunway, actualRunway=$actualRunway');
+  }
 
   final String airport;
-  final String timezone;
-  final String iata;
-  final String icao;
+  final String? timezone; // Make timezone nullable
+  final String? iata;
+  final String? icao;
   final String? terminal;
   final String? gate;
-  final num? delay;
+  final String? delay;
   final String scheduled;
-  final String estimated;
-  final String actual;
-  final String estimatedRunway;
-  final String actualRunway;
+  final String? estimated;
+  final String? actual;
+  final String? estimatedRunway;
+  final String? actualRunway;
 
   Departure copyWith({
     String? airport,
@@ -318,7 +324,7 @@ class Departure {
     String? icao,
     String? terminal,
     String? gate,
-    num? delay,
+    String? delay,
     String? scheduled,
     String? estimated,
     String? actual,
