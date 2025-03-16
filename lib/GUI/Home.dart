@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flight_app/API/Static.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../API/Model.dart';
 
@@ -42,13 +45,24 @@ class _HomeState extends State<Home> {
     _fetchFlights();
   }
 
-  Future<void> _fetchFlights() async{
+  Future<void> _fetchFlights() async {
     List<Data> flights = await ApiService.fetchFlights();
-    print("Fetched Flights: $flights");
+
+    flights = flights.map((flight) {
+      return flight.copyWith(
+        price: _generateRandomPrice(), // Add a random price
+      );
+    }).toList();
+
     setState(() {
       _flight = flights;
       _isLoading = false;
     });
+  }
+
+  double _generateRandomPrice() {
+    // Generate a random price between 100 and 1000
+    return 100 + Random().nextDouble() * 900;
   }
 
   @override
@@ -285,73 +299,81 @@ class _HomeState extends State<Home> {
                         width: double.infinity,
                         fit: BoxFit.fitWidth,
                       ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15, left: 30),
-                            child: Row(
-                              children: [
-                                Text( flight.departure.airport, style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 19
-                                ),),
-                                SizedBox(width: screenWidth * 0.17,),
-                                Image.asset("lib/Assets/Vector1.png"),
-                                SizedBox(width: screenWidth * 0.17,),
-                                Text(flight.arrival.airport?? "Unknown", style: const TextStyle(
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15, left: 30),
+                              child: Row(
+                                children: [
+                                  Text(flight.departure?.scheduled!= null? DateFormat('h:mm a').format(DateTime.parse(flight.departure!.scheduled!)): "Unknown", style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 19
-                                ),)
-                                
-                              ],
+                                  ),),
+                                  SizedBox(width: screenWidth * 0.17,),
+                                  Image.asset("lib/Assets/Vector1.png"),
+                                  SizedBox(width: screenWidth * 0.17,),
+                                  Text(flight.arrival?.scheduled !=null ? DateFormat("h:mm a").format(DateTime.parse(flight.arrival!.scheduled!)): "Unknown", style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 19
+                                  ),)
 
+                                ],
+
+                              ),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 45),
-                                child: Text(flight.departure.airport, style: const TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w700,
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 45),
+                                  child: Text(flight.departure?.iata??"Unknown", style: const TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16
+                                  ),),
+                                ),
+                                SizedBox(width: screenWidth * 0.21,),
+                                Text(flight.flight?.iata?? "Unknown", style: const TextStyle(
                                   fontSize: 16
                                 ),),
-                              ),
-                              SizedBox(width: screenWidth * 0.21,),
-                              Text(flight.departure.airport, style: const TextStyle(
-                                fontSize: 16
-                              ),),
-                              SizedBox(width: screenWidth * 0.2,),
-                              Text(flight.arrival.airport?? "Unknow", style: const TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16
-                              ),)
-                            ],
-                          ),
-                          const Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                            indent: 15,
-                            endIndent: 15,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 25),
-                                child: Text(flight.airline.name, style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
-                                ),),
-                              ),
-                              SizedBox(width: screenWidth * 0.4,),
-                               Text(flight.departure.airport, style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),)
-                            ],
-                          )
-                        ],
+                                SizedBox(width: screenWidth * 0.2,),
+                                Text(flight.arrival?.iata?? "Unknow", style: const TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16
+                                ),)
+                              ],
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                              indent: 15,
+                              endIndent: 15,
+                            ),
+                            Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 25),
+                                    child: Text(flight.airline?.name  ?? "Unknown", style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),),
+                                  ),
+                                ),
+                                 Positioned(
+                                     right: screenWidth * 0.1, 
+                                   child: Text('\$${flight.price?.toStringAsFixed(0) ?? 'N/A'}', style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                                                   ),),
+                                 ),
+                              ],
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),

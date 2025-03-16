@@ -1,407 +1,348 @@
 class Model {
-  Model({
-    required this.pagination,
-    required this.data,
-  });
+  Pagination? pagination;
+  List<Data>? data;
 
-  Model.fromJson(Map<String, dynamic> json)
-      : pagination = Pagination.fromJson(json['pagination']),
-        data = (json['data'] as List).map((v) => Data.fromJson(v)).toList();
+  Model({this.pagination, this.data});
 
-  final Pagination pagination;
-  final List<Data> data;
-
-  Model copyWith({
-    Pagination? pagination,
-    List<Data>? data,
-  }) =>
-      Model(
-        pagination: pagination ?? this.pagination,
-        data: data ?? this.data,
-      );
+  Model.fromJson(Map<String, dynamic> json) {
+    pagination = json['pagination'] != null
+        ? new Pagination.fromJson(json['pagination'])
+        : null;
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
 
   Map<String, dynamic> toJson() {
-    return {
-      'pagination': pagination.toJson(),
-      'data': data.map((v) => v.toJson()).toList(),
-    };
-  }
-}
-
-class Data {
-  Data({
-    required this.flightDate,
-    required this.flightStatus,
-    required this.departure,
-    required this.arrival,
-    required this.airline,
-    required this.flight,
-    this.aircraft,
-    this.live,
-  });
-
-  Data.fromJson(Map<String, dynamic> json)
-      : flightDate = json['flight_date']?.toString() ?? 'Unknown',
-        flightStatus = json['flight_status']?.toString() ?? 'Unknown',
-        departure = Departure.fromJson(json['departure']),
-        arrival = Arrival.fromJson(json['arrival']),
-        airline = Airline.fromJson(json['airline']),
-        flight = Flight.fromJson(json['flight']),
-        aircraft = json['aircraft']?.toString(),
-        live = json['live']?.toString() {
-    print('Parsed Data: flightDate=$flightDate, flightStatus=$flightStatus, aircraft=$aircraft, live=$live');
-  }
-
-  final String flightDate;
-  final String flightStatus;
-  final Departure departure;
-  final Arrival arrival;
-  final Airline airline;
-  final Flight flight;
-  final String? aircraft;
-  final String? live;
-
-  Data copyWith({
-    String? flightDate,
-    String? flightStatus,
-    Departure? departure,
-    Arrival? arrival,
-    Airline? airline,
-    Flight? flight,
-    String? aircraft,
-    String? live,
-  }) =>
-      Data(
-        flightDate: flightDate ?? this.flightDate,
-        flightStatus: flightStatus ?? this.flightStatus,
-        departure: departure ?? this.departure,
-        arrival: arrival ?? this.arrival,
-        airline: airline ?? this.airline,
-        flight: flight ?? this.flight,
-        aircraft: aircraft ?? this.aircraft,
-        live: live ?? this.live,
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'flight_date': flightDate,
-      'flight_status': flightStatus,
-      'departure': departure.toJson(),
-      'arrival': arrival.toJson(),
-      'airline': airline.toJson(),
-      'flight': flight.toJson(),
-      'aircraft': aircraft,
-      'live': live,
-    };
-  }
-}
-
-class Flight {
-  Flight({
-    required this.number,
-    required this.iata,
-    required this.icao,
-    this.codeshared,
-  });
-
-  Flight.fromJson(Map<String, dynamic> json)
-      : number = int.tryParse(json['number']?.toString() ?? '0') ?? 0,
-        iata = json['iata']?.toString() ?? 'Unknown',
-        icao = json['icao']?.toString() ?? 'Unknown',
-        codeshared = json['codeshared']?.toString();
-
-  final int number;
-  final String iata;
-  final String icao;
-  final String? codeshared;
-
-  Flight copyWith({
-    int? number,
-    String? iata,
-    String? icao,
-    String? codeshared,
-  }) =>
-      Flight(
-        number: number ?? this.number,
-        iata: iata ?? this.iata,
-        icao: icao ?? this.icao,
-        codeshared: codeshared ?? this.codeshared,
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'number': number.toString(),
-      'iata': iata,
-      'icao': icao,
-      'codeshared': codeshared,
-    };
-  }
-}
-
-class Airline {
-  Airline({
-    required this.name,
-    required this.iata,
-    required this.icao,
-  });
-
-  Airline.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        iata = json['iata'],
-        icao = json['icao'];
-
-  final String name;
-  final String iata;
-  final String icao;
-
-  Airline copyWith({
-    String? name,
-    String? iata,
-    String? icao,
-  }) =>
-      Airline(
-        name: name ?? this.name,
-        iata: iata ?? this.iata,
-        icao: icao ?? this.icao,
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'iata': iata,
-      'icao': icao,
-    };
-  }
-}
-
-class Arrival {
-  Arrival({
-    required this.airport,
-    this.timezone, // Make timezone nullable
-    required this.iata,
-    required this.icao,
-    required this.terminal,
-    this.gate,
-    this.baggage,
-    this.delay,
-    required this.scheduled,
-    this.estimated,
-    this.actual,
-    this.estimatedRunway,
-    this.actualRunway,
-  });
-
-  Arrival.fromJson(Map<String, dynamic> json)
-      : airport = json['airport']?.toString() ?? 'Unknown',
-        timezone = json['timezone']?.toString()?? "Unknown", // Handle null
-        iata = json['iata']?.toString() ?? 'Unknown',
-        icao = json['icao']?.toString() ?? 'Unknown',
-        terminal = json['terminal']?.toString() ?? 'Unknown',
-        gate = json['gate']?.toString(),
-        baggage = json['baggage']?.toString(),
-        delay = json['delay']?.toString(),
-        scheduled = json['scheduled']?.toString() ?? 'Unknown',
-        estimated = json['estimated']?.toString(),
-        actual = json['actual']?.toString(),
-        estimatedRunway = json['estimated_runway']?.toString(),
-        actualRunway = json['actual_runway']?.toString() {
-    print('Parsed Arrival: airport=$airport, timezone=$timezone, iata=$iata, icao=$icao, terminal=$terminal, gate=$gate, baggage=$baggage, delay=$delay, scheduled=$scheduled, estimated=$estimated, actual=$actual, estimatedRunway=$estimatedRunway, actualRunway=$actualRunway');
-  }
-
-  final String? airport;
-  final String? timezone; // Make timezone nullable
-  final String? iata;
-  final String? icao;
-  final String? terminal;
-  final String? gate;
-  final String? baggage;
-  final String? delay;
-  final String? scheduled;
-  final String? estimated;
-  final String? actual;
-  final String? estimatedRunway;
-  final String? actualRunway;
-
-  Arrival copyWith({
-    String? airport,
-    String? timezone,
-    String? iata,
-    String? icao,
-    String? terminal,
-    String? gate,
-    String? baggage,
-    String? delay,
-    String? scheduled,
-    String? estimated,
-    String? actual,
-    String? estimatedRunway,
-    String? actualRunway,
-  }) =>
-      Arrival(
-        airport: airport ?? this.airport,
-        timezone: timezone ?? this.timezone,
-        iata: iata ?? this.iata,
-        icao: icao ?? this.icao,
-        terminal: terminal ?? this.terminal,
-        gate: gate ?? this.gate,
-        baggage: baggage ?? this.baggage,
-        delay: delay ?? this.delay,
-        scheduled: scheduled ?? this.scheduled,
-        estimated: estimated ?? this.estimated,
-        actual: actual ?? this.actual,
-        estimatedRunway: estimatedRunway ?? this.estimatedRunway,
-        actualRunway: actualRunway ?? this.actualRunway,
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'airport': airport,
-      'timezone': timezone,
-      'iata': iata,
-      'icao': icao,
-      'terminal': terminal,
-      'gate': gate,
-      'baggage': baggage,
-      'delay': delay,
-      'scheduled': scheduled,
-      'estimated': estimated,
-      'actual': actual,
-      'estimated_runway': estimatedRunway,
-      'actual_runway': actualRunway,
-    };
-  }
-}
-
-class Departure {
-  Departure({
-    required this.airport,
-    this.timezone, // Make timezone nullable
-    required this.iata,
-    required this.icao,
-    this.terminal,
-    this.gate,
-    this.delay,
-    required this.scheduled,
-    this.estimated,
-    this.actual,
-    this.estimatedRunway,
-    this.actualRunway,
-  });
-
-  Departure.fromJson(Map<String, dynamic> json)
-      : airport = json['airport']?.toString() ?? 'Unknown',
-        timezone = json['timezone']?.toString()?? "Unknown", // Handle null
-        iata = json['iata']?.toString() ?? 'Unknown',
-        icao = json['icao']?.toString() ?? 'Unknown',
-        terminal = json['terminal']?.toString(),
-        gate = json['gate']?.toString(),
-        delay = json['delay']?.toString(),
-        scheduled = json['scheduled']?.toString() ?? 'Unknown',
-        estimated = json['estimated']?.toString(),
-        actual = json['actual']?.toString(),
-        estimatedRunway = json['estimated_runway']?.toString(),
-        actualRunway = json['actual_runway']?.toString() {
-    print('Parsed Departure: airport=$airport, timezone=$timezone, iata=$iata, icao=$icao, terminal=$terminal, gate=$gate, delay=$delay, scheduled=$scheduled, estimated=$estimated, actual=$actual, estimatedRunway=$estimatedRunway, actualRunway=$actualRunway');
-  }
-
-  final String airport;
-  final String? timezone; // Make timezone nullable
-  final String? iata;
-  final String? icao;
-  final String? terminal;
-  final String? gate;
-  final String? delay;
-  final String scheduled;
-  final String? estimated;
-  final String? actual;
-  final String? estimatedRunway;
-  final String? actualRunway;
-
-  Departure copyWith({
-    String? airport,
-    String? timezone,
-    String? iata,
-    String? icao,
-    String? terminal,
-    String? gate,
-    String? delay,
-    String? scheduled,
-    String? estimated,
-    String? actual,
-    String? estimatedRunway,
-    String? actualRunway,
-  }) =>
-      Departure(
-        airport: airport ?? this.airport,
-        timezone: timezone ?? this.timezone,
-        iata: iata ?? this.iata,
-        icao: icao ?? this.icao,
-        terminal: terminal ?? this.terminal,
-        gate: gate ?? this.gate,
-        delay: delay ?? this.delay,
-        scheduled: scheduled ?? this.scheduled,
-        estimated: estimated ?? this.estimated,
-        actual: actual ?? this.actual,
-        estimatedRunway: estimatedRunway ?? this.estimatedRunway,
-        actualRunway: actualRunway ?? this.actualRunway,
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'airport': airport,
-      'timezone': timezone,
-      'iata': iata,
-      'icao': icao,
-      'terminal': terminal,
-      'gate': gate,
-      'delay': delay,
-      'scheduled': scheduled,
-      'estimated': estimated,
-      'actual': actual,
-      'estimated_runway': estimatedRunway,
-      'actual_runway': actualRunway,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.pagination != null) {
+      data['pagination'] = this.pagination!.toJson();
+    }
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 
 class Pagination {
-  Pagination({
-    required this.limit,
-    required this.offset,
-    required this.count,
-    required this.total,
-  });
+  int? limit;
+  int? offset;
+  int? count;
+  int? total;
 
-  Pagination.fromJson(Map<String, dynamic> json)
-      : limit = json['limit'],
-        offset = json['offset'],
-        count = json['count'],
-        total = json['total'];
+  Pagination({this.limit, this.offset, this.count, this.total});
 
-  final num limit;
-  final num offset;
-  final num count;
-  final num total;
-
-  Pagination copyWith({
-    num? limit,
-    num? offset,
-    num? count,
-    num? total,
-  }) =>
-      Pagination(
-        limit: limit ?? this.limit,
-        offset: offset ?? this.offset,
-        count: count ?? this.count,
-        total: total ?? this.total,
-      );
+  Pagination.fromJson(Map<String, dynamic> json) {
+    limit = json['limit'];
+    offset = json['offset'];
+    count = json['count'];
+    total = json['total'];
+  }
 
   Map<String, dynamic> toJson() {
-    return {
-      'limit': limit,
-      'offset': offset,
-      'count': count,
-      'total': total,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['limit'] = this.limit;
+    data['offset'] = this.offset;
+    data['count'] = this.count;
+    data['total'] = this.total;
+    return data;
   }
 }
+
+class Data {
+  String? flightDate;
+  String? flightStatus;
+  Departure? departure;
+  Arrival? arrival;
+  Airline? airline;
+  Flight? flight;
+  Null? aircraft;
+  Null? live;
+  double? price;
+
+  Data(
+      {this.flightDate,
+        this.flightStatus,
+        this.departure,
+        this.arrival,
+        this.airline,
+        this.flight,
+        this.aircraft,
+        this.live,
+        this.price,
+      });
+
+  Data copyWith({double? price}) {
+    return Data(
+      flightDate: this.flightDate,
+      flightStatus: this.flightStatus,
+      departure: this.departure,
+      arrival: this.arrival,
+      airline: this.airline,
+      flight: this.flight,
+      aircraft: this.aircraft,
+      live: this.live,
+      price: price ?? this.price, // Add this field
+    );
+  }
+
+  Data.fromJson(Map<String, dynamic> json) {
+    flightDate = json['flight_date'];
+    flightStatus = json['flight_status'];
+    departure = json['departure'] != null
+        ? new Departure.fromJson(json['departure'])
+        : null;
+    arrival =
+    json['arrival'] != null ? new Arrival.fromJson(json['arrival']) : null;
+    airline =
+    json['airline'] != null ? new Airline.fromJson(json['airline']) : null;
+    flight =
+    json['flight'] != null ? new Flight.fromJson(json['flight']) : null;
+    aircraft = json['aircraft'];
+    live = json['live'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['flight_date'] = this.flightDate;
+    data['flight_status'] = this.flightStatus;
+    if (this.departure != null) {
+      data['departure'] = this.departure!.toJson();
+    }
+    if (this.arrival != null) {
+      data['arrival'] = this.arrival!.toJson();
+    }
+    if (this.airline != null) {
+      data['airline'] = this.airline!.toJson();
+    }
+    if (this.flight != null) {
+      data['flight'] = this.flight!.toJson();
+    }
+    data['aircraft'] = this.aircraft;
+    data['live'] = this.live;
+    return data;
+  }
+}
+
+class Departure {
+  String? airport;
+  String? timezone;
+  String? country;
+  String? iata;
+  String? icao;
+  String? terminal;
+  String? gate;
+  int? delay;
+  String? scheduled;
+  String? estimated;
+  Null? actual;
+  Null? estimatedRunway;
+  Null? actualRunway;
+
+  Departure(
+      {this.airport,
+        this.country,
+        this.timezone,
+        this.iata,
+        this.icao,
+        this.terminal,
+        this.gate,
+        this.delay,
+        this.scheduled,
+        this.estimated,
+        this.actual,
+        this.estimatedRunway,
+        this.actualRunway});
+
+  Departure.fromJson(Map<String, dynamic> json) {
+    airport = json['airport'];
+    country =json ['country'];
+    timezone = json['timezone'];
+    iata = json['iata'];
+    icao = json['icao'];
+    terminal = json['terminal'];
+    gate = json['gate'];
+    delay = json['delay'];
+    scheduled = json['scheduled'];
+    estimated = json['estimated'];
+    actual = json['actual'];
+    estimatedRunway = json['estimated_runway'];
+    actualRunway = json['actual_runway'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['airport'] = this.airport;
+    data['country'] = this.country;
+    data['timezone'] = this.timezone;
+    data['iata'] = this.iata;
+    data['icao'] = this.icao;
+    data['terminal'] = this.terminal;
+    data['gate'] = this.gate;
+    data['delay'] = this.delay;
+    data['scheduled'] = this.scheduled;
+    data['estimated'] = this.estimated;
+    data['actual'] = this.actual;
+    data['estimated_runway'] = this.estimatedRunway;
+    data['actual_runway'] = this.actualRunway;
+    return data;
+  }
+}
+
+class Arrival {
+  String? airport;
+  String? timezone;
+  String? iata;
+  String? icao;
+  String? terminal;
+  String? gate;
+  String? baggage;
+  Null? delay;
+  String? scheduled;
+  Null? estimated;
+  Null? actual;
+  Null? estimatedRunway;
+  Null? actualRunway;
+
+  Arrival(
+      {this.airport,
+        this.timezone,
+        this.iata,
+        this.icao,
+        this.terminal,
+        this.gate,
+        this.baggage,
+        this.delay,
+        this.scheduled,
+        this.estimated,
+        this.actual,
+        this.estimatedRunway,
+        this.actualRunway});
+
+  Arrival.fromJson(Map<String, dynamic> json) {
+    airport = json['airport'];
+    timezone = json['timezone'];
+    iata = json['iata'];
+    icao = json['icao'];
+    terminal = json['terminal'];
+    gate = json['gate'];
+    baggage = json['baggage'];
+    delay = json['delay'];
+    scheduled = json['scheduled'];
+    estimated = json['estimated'];
+    actual = json['actual'];
+    estimatedRunway = json['estimated_runway'];
+    actualRunway = json['actual_runway'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['airport'] = this.airport;
+    data['timezone'] = this.timezone;
+    data['iata'] = this.iata;
+    data['icao'] = this.icao;
+    data['terminal'] = this.terminal;
+    data['gate'] = this.gate;
+    data['baggage'] = this.baggage;
+    data['delay'] = this.delay;
+    data['scheduled'] = this.scheduled;
+    data['estimated'] = this.estimated;
+    data['actual'] = this.actual;
+    data['estimated_runway'] = this.estimatedRunway;
+    data['actual_runway'] = this.actualRunway;
+    return data;
+  }
+}
+
+class Airline {
+  String? name;
+  String? iata;
+  String? icao;
+
+  Airline({this.name, this.iata, this.icao});
+
+  Airline.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    iata = json['iata'];
+    icao = json['icao'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['iata'] = this.iata;
+    data['icao'] = this.icao;
+    return data;
+  }
+}
+
+class Flight {
+  String? number;
+  String? iata;
+  String? icao;
+  Codeshared? codeshared;
+
+  Flight({this.number, this.iata, this.icao, this.codeshared});
+
+  Flight.fromJson(Map<String, dynamic> json) {
+    number = json['number'];
+    iata = json['iata'];
+    icao = json['icao'];
+    codeshared = json['codeshared'] != null
+        ? new Codeshared.fromJson(json['codeshared'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['number'] = this.number;
+    data['iata'] = this.iata;
+    data['icao'] = this.icao;
+    if (this.codeshared != null) {
+      data['codeshared'] = this.codeshared!.toJson();
+    }
+    return data;
+  }
+}
+
+class Codeshared {
+  String? airlineName;
+  String? airlineIata;
+  String? airlineIcao;
+  String? flightNumber;
+  String? flightIata;
+  String? flightIcao;
+
+  Codeshared(
+      {this.airlineName,
+        this.airlineIata,
+        this.airlineIcao,
+        this.flightNumber,
+        this.flightIata,
+        this.flightIcao});
+
+  Codeshared.fromJson(Map<String, dynamic> json) {
+    airlineName = json['airline_name'];
+    airlineIata = json['airline_iata'];
+    airlineIcao = json['airline_icao'];
+    flightNumber = json['flight_number'];
+    flightIata = json['flight_iata'];
+    flightIcao = json['flight_icao'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['airline_name'] = this.airlineName;
+    data['airline_iata'] = this.airlineIata;
+    data['airline_icao'] = this.airlineIcao;
+    data['flight_number'] = this.flightNumber;
+    data['flight_iata'] = this.flightIata;
+    data['flight_icao'] = this.flightIcao;
+    return data;
+  }
+}
+
