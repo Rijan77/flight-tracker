@@ -287,7 +287,7 @@ class _HomeState extends State<Home> {
             child: _isLoading ? Center(child: CircularProgressIndicator(),)
             : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              itemCount: _flight.length,
+              itemCount: _flight.length>50?50: _flight.length,
               itemBuilder: (context, index) {
                 final flight = _flight[index];
                 return Padding(
