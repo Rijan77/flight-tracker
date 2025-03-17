@@ -1,4 +1,10 @@
+import 'dart:math';
+
+import 'package:flight_app/API/Static.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../API/Model.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,8 +19,10 @@ class _HomeState extends State<Home> {
 
   int _selectedPeople = 1;
   final List<int> _numPeople = [1, 2, 3, 4];
-
   DateTime _selectedDate = DateTime.now();
+
+  List<Data> _flight = [];
+  bool _isLoading = true;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -28,6 +36,33 @@ class _HomeState extends State<Home> {
         _selectedDate = picked;
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchFlights();
+  }
+
+  Future<void> _fetchFlights() async {
+    List<Data> flights = await ApiService.fetchFlights();
+
+    flights = flights.map((flight) {
+      return flight.copyWith(
+        price: _generateRandomPrice(), // Add a random price
+      );
+    }).toList();
+
+    setState(() {
+      _flight = flights;
+      _isLoading = false;
+    });
+  }
+
+  double _generateRandomPrice() {
+    // Generate a random price between 100 and 1000
+    return 100 + Random().nextDouble() * 900;
   }
 
   @override
@@ -249,10 +284,12 @@ class _HomeState extends State<Home> {
           ),
           SizedBox(height: screenHeight * 0.02),
           Expanded(
-            child: ListView.builder(
+            child: _isLoading ? Center(child: CircularProgressIndicator(),)
+            : ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              itemCount: 20 ,
+              itemCount: _flight.length,
               itemBuilder: (context, index) {
+                final flight = _flight[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Stack(
@@ -262,73 +299,81 @@ class _HomeState extends State<Home> {
                         width: double.infinity,
                         fit: BoxFit.fitWidth,
                       ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15, left: 30),
-                            child: Row(
-                              children: [
-                                const Text("7:05 AM", style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 19
-                                ),),
-                                SizedBox(width: screenWidth * 0.17,),
-                                Image.asset("lib/Assets/Vector1.png"),
-                                SizedBox(width: screenWidth * 0.17,),
-                                const Text("8:05 PM", style: TextStyle(
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15, left: 30),
+                              child: Row(
+                                children: [
+                                  Text(flight.departure?.scheduled!= null? DateFormat('h:mm a').format(DateTime.parse(flight.departure!.scheduled!)): "Unknown", style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 19
-                                ),)
-                                
-                              ],
+                                  ),),
+                                  SizedBox(width: screenWidth * 0.17,),
+                                  Image.asset("lib/Assets/Vector1.png"),
+                                  SizedBox(width: screenWidth * 0.17,),
+                                  Text(flight.arrival?.scheduled !=null ? DateFormat("h:mm a").format(DateTime.parse(flight.arrival!.scheduled!)): "Unknown", style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 19
+                                  ),)
 
+                                ],
+
+                              ),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 45),
-                                child: Text("USA", style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w700,
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 45),
+                                  child: Text(flight.departure?.iata??"Unknown", style: const TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16
+                                  ),),
+                                ),
+                                SizedBox(width: screenWidth * 0.21,),
+                                Text(flight.flight?.iata?? "Unknown", style: const TextStyle(
                                   fontSize: 16
                                 ),),
-                              ),
-                              SizedBox(width: screenWidth * 0.21,),
-                              const Text("13:00", style: TextStyle(
-                                fontSize: 16
-                              ),),
-                              SizedBox(width: screenWidth * 0.2,),
-                              const Text("ETH", style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16
-                              ),)
-                            ],
-                          ),
-                          const Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                            indent: 15,
-                            endIndent: 15,
-                          ),
-                          Row(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 25),
-                                child: Text("Air Canada", style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
-                                ),),
-                              ),
-                              SizedBox(width: screenWidth * 0.4,),
-                              const Text("\$ 10000", style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),)
-                            ],
-                          )
-                        ],
+                                SizedBox(width: screenWidth * 0.2,),
+                                Text(flight.arrival?.iata?? "Unknow", style: const TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16
+                                ),)
+                              ],
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                              indent: 15,
+                              endIndent: 15,
+                            ),
+                            Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 25),
+                                    child: Text(flight.airline?.name  ?? "Unknown", style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),),
+                                  ),
+                                ),
+                                 Positioned(
+                                     right: screenWidth * 0.1, 
+                                   child: Text('\$${flight.price?.toStringAsFixed(0) ?? 'N/A'}', style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                                                   ),),
+                                 ),
+                              ],
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
