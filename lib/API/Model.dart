@@ -6,20 +6,19 @@ class Model {
 
   Model.fromJson(Map<String, dynamic> json) {
     pagination = json['pagination'] != null
-        ? new Pagination.fromJson(json['pagination'])
+        ? Pagination.fromJson(json['pagination'])
         : null;
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
-
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.pagination != null) {
-      data['pagination'] = this.pagination!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (pagination != null) {
+      data['pagination'] = pagination!.toJson();
     }
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -44,11 +43,11 @@ class Pagination {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['limit'] = this.limit;
-    data['offset'] = this.offset;
-    data['count'] = this.count;
-    data['total'] = this.total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['limit'] = limit;
+    data['offset'] = offset;
+    data['count'] = count;
+    data['total'] = total;
     return data;
   }
 }
@@ -60,8 +59,8 @@ class Data {
   Arrival? arrival;
   Airline? airline;
   Flight? flight;
-  Null? aircraft;
-  Null? live;
+  dynamic aircraft;
+  dynamic live;
   double? price;
 
   Data(
@@ -78,14 +77,14 @@ class Data {
 
   Data copyWith({double? price}) {
     return Data(
-      flightDate: this.flightDate,
-      flightStatus: this.flightStatus,
-      departure: this.departure,
-      arrival: this.arrival,
-      airline: this.airline,
-      flight: this.flight,
-      aircraft: this.aircraft,
-      live: this.live,
+      flightDate: flightDate,
+      flightStatus: flightStatus,
+      departure: departure,
+      arrival: arrival,
+      airline: airline,
+      flight: flight,
+      aircraft: aircraft,
+      live: live,
       price: price ?? this.price, // Add this field
     );
   }
@@ -94,36 +93,36 @@ class Data {
     flightDate = json['flight_date'];
     flightStatus = json['flight_status'];
     departure = json['departure'] != null
-        ? new Departure.fromJson(json['departure'])
+        ? Departure.fromJson(json['departure'])
         : null;
     arrival =
-    json['arrival'] != null ? new Arrival.fromJson(json['arrival']) : null;
+    json['arrival'] != null ?  Arrival.fromJson(json['arrival']) : null;
     airline =
-    json['airline'] != null ? new Airline.fromJson(json['airline']) : null;
+    json['airline'] != null ?  Airline.fromJson(json['airline']) : null;
     flight =
-    json['flight'] != null ? new Flight.fromJson(json['flight']) : null;
+    json['flight'] != null ?  Flight.fromJson(json['flight']) : null;
     aircraft = json['aircraft'];
     live = json['live'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['flight_date'] = this.flightDate;
-    data['flight_status'] = this.flightStatus;
-    if (this.departure != null) {
-      data['departure'] = this.departure!.toJson();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['flight_date'] = flightDate;
+    data['flight_status'] = flightStatus;
+    if (departure != null) {
+      data['departure'] = departure!.toJson();
     }
-    if (this.arrival != null) {
-      data['arrival'] = this.arrival!.toJson();
+    if (arrival != null) {
+      data['arrival'] = arrival!.toJson();
     }
-    if (this.airline != null) {
-      data['airline'] = this.airline!.toJson();
+    if (airline != null) {
+      data['airline'] = airline!.toJson();
     }
-    if (this.flight != null) {
-      data['flight'] = this.flight!.toJson();
+    if (flight != null) {
+      data['flight'] = flight!.toJson();
     }
-    data['aircraft'] = this.aircraft;
-    data['live'] = this.live;
+    data['aircraft'] = aircraft;
+    data['live'] = live;
     return data;
   }
 }
@@ -139,9 +138,9 @@ class Departure {
   int? delay;
   String? scheduled;
   String? estimated;
-  Null? actual;
-  Null? estimatedRunway;
-  Null? actualRunway;
+  dynamic actual;
+  dynamic estimatedRunway;
+  dynamic actualRunway;
 
   Departure(
       {this.airport,
@@ -175,20 +174,20 @@ class Departure {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['airport'] = this.airport;
-    data['country'] = this.country;
-    data['timezone'] = this.timezone;
-    data['iata'] = this.iata;
-    data['icao'] = this.icao;
-    data['terminal'] = this.terminal;
-    data['gate'] = this.gate;
-    data['delay'] = this.delay;
-    data['scheduled'] = this.scheduled;
-    data['estimated'] = this.estimated;
-    data['actual'] = this.actual;
-    data['estimated_runway'] = this.estimatedRunway;
-    data['actual_runway'] = this.actualRunway;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['airport'] = airport;
+    data['country'] = country;
+    data['timezone'] = timezone;
+    data['iata'] = iata;
+    data['icao'] = icao;
+    data['terminal'] = terminal;
+    data['gate'] = gate;
+    data['delay'] = delay;
+    data['scheduled'] = scheduled;
+    data['estimated'] = estimated;
+    data['actual'] = actual;
+    data['estimated_runway'] = estimatedRunway;
+    data['actual_runway'] = actualRunway;
     return data;
   }
 }
@@ -201,12 +200,12 @@ class Arrival {
   String? terminal;
   String? gate;
   String? baggage;
-  Null? delay;
+  int? delay;
   String? scheduled;
-  Null? estimated;
-  Null? actual;
-  Null? estimatedRunway;
-  Null? actualRunway;
+  dynamic estimated;
+  dynamic actual;
+  dynamic estimatedRunway;
+  dynamic actualRunway;
 
   Arrival(
       {this.airport,
@@ -240,20 +239,20 @@ class Arrival {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['airport'] = this.airport;
-    data['timezone'] = this.timezone;
-    data['iata'] = this.iata;
-    data['icao'] = this.icao;
-    data['terminal'] = this.terminal;
-    data['gate'] = this.gate;
-    data['baggage'] = this.baggage;
-    data['delay'] = this.delay;
-    data['scheduled'] = this.scheduled;
-    data['estimated'] = this.estimated;
-    data['actual'] = this.actual;
-    data['estimated_runway'] = this.estimatedRunway;
-    data['actual_runway'] = this.actualRunway;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['airport'] = airport;
+    data['timezone'] = timezone;
+    data['iata'] = iata;
+    data['icao'] = icao;
+    data['terminal'] = terminal;
+    data['gate'] = gate;
+    data['baggage'] = baggage;
+    data['delay'] = delay;
+    data['scheduled'] = scheduled;
+    data['estimated'] = estimated;
+    data['actual'] = actual;
+    data['estimated_runway'] = estimatedRunway;
+    data['actual_runway'] = actualRunway;
     return data;
   }
 }
@@ -272,10 +271,10 @@ class Airline {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['iata'] = this.iata;
-    data['icao'] = this.icao;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['iata'] = iata;
+    data['icao'] = icao;
     return data;
   }
 }
@@ -298,12 +297,12 @@ class Flight {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['number'] = this.number;
-    data['iata'] = this.iata;
-    data['icao'] = this.icao;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['number'] = number;
+    data['iata'] = iata;
+    data['icao'] = icao;
     if (this.codeshared != null) {
-      data['codeshared'] = this.codeshared!.toJson();
+      data['codeshared'] = codeshared!.toJson();
     }
     return data;
   }
@@ -335,13 +334,13 @@ class Codeshared {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['airline_name'] = this.airlineName;
-    data['airline_iata'] = this.airlineIata;
-    data['airline_icao'] = this.airlineIcao;
-    data['flight_number'] = this.flightNumber;
-    data['flight_iata'] = this.flightIata;
-    data['flight_icao'] = this.flightIcao;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['airline_name'] = airlineName;
+    data['airline_iata'] = airlineIata;
+    data['airline_icao'] = airlineIcao;
+    data['flight_number'] = flightNumber;
+    data['flight_iata'] = flightIata;
+    data['flight_icao'] = flightIcao;
     return data;
   }
 }
