@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flight_app/API/Static.dart';
+import 'package:flight_app/GUI/user_auth/Login_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -292,113 +293,118 @@ class _HomeState extends State<Home> {
                 final flight = _flight[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        "lib/Assets/Subtract.png",
-                        width: double.infinity,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15, left: 30),
-                              child: Row(
-                                children: [
-                                  Text(flight.departure?.scheduled!= null? DateFormat('h:mm a').format(DateTime.parse(flight.departure!.scheduled!)): "Unknown", style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 19
-                                  ),),
-                                  SizedBox(width: screenWidth * 0.17,),
-                                  Image.asset("lib/Assets/Vector1.png"),
-                                  SizedBox(width: screenWidth * 0.17,),
-                                  Text(flight.arrival?.scheduled !=null ? DateFormat("h:mm a").format(DateTime.parse(flight.arrival!.scheduled!)): "Unknown", style: const TextStyle(
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                    },
+                    child: Stack(
+                      children: [
+                        Image.asset(
+                          "lib/Assets/Subtract.png",
+                          width: double.infinity,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15, left: 30),
+                                child: Row(
+                                  children: [
+                                    Text(flight.departure?.scheduled!= null? DateFormat('h:mm a').format(DateTime.parse(flight.departure!.scheduled!)): "Unknown", style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 19
-                                  ),)
-
-                                ],
-
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Text(
-                                      flight.departure?.iata ?? "Unknown",
-                                      style: const TextStyle(
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                    child: Text(
-                                      flight.flight?.iata ?? "Unknown",
-                                      style: const TextStyle(fontSize: 14),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 30),
-                                    child: Text(
-                                      flight.arrival?.iata ?? "Unknown",
-                                      style: const TextStyle(
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                      ),
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              color: Colors.grey,
-                              thickness: 1,
-                              indent: 15,
-                              endIndent: 15,
-                            ),
-                            Stack(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 25),
-                                    child: Text(flight.airline?.name  ?? "Unknown", style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      overflow: TextOverflow.ellipsis,
                                     ),),
-                                  ),
+                                    SizedBox(width: screenWidth * 0.17,),
+                                    Image.asset("lib/Assets/Vector1.png"),
+                                    SizedBox(width: screenWidth * 0.17,),
+                                    Text(flight.arrival?.scheduled !=null ? DateFormat("h:mm a").format(DateTime.parse(flight.arrival!.scheduled!)): "Unknown", style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 19
+                                    ),)
+
+                                  ],
+
                                 ),
-                                 Positioned(
-                                     right: screenWidth * 0.08,
-                                   child: Text('\$${flight.price?.toStringAsFixed(0) ?? 'N/A'}', style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                                                   ),),
-                                 ),
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Text(
+                                        flight.departure?.iata ?? "Unknown",
+                                        style: const TextStyle(
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Center(
+                                      child: Text(
+                                        flight.flight?.iata ?? "Unknown",
+                                        style: const TextStyle(fontSize: 14),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 30),
+                                      child: Text(
+                                        flight.arrival?.iata ?? "Unknown",
+                                        style: const TextStyle(
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                thickness: 1,
+                                indent: 15,
+                                endIndent: 15,
+                              ),
+                              Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 25),
+                                      child: Text(flight.airline?.name  ?? "Unknown", style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),),
+                                    ),
+                                  ),
+                                   Positioned(
+                                       right: screenWidth * 0.08,
+                                     child: Text('\$${flight.price?.toStringAsFixed(0) ?? 'N/A'}', style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                                                     ),),
+                                   ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
