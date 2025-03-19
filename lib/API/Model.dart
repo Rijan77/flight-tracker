@@ -106,7 +106,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data =  <String, dynamic>{};
     data['flight_date'] = flightDate;
     data['flight_status'] = flightStatus;
     if (departure != null) {
@@ -292,7 +292,7 @@ class Flight {
     iata = json['iata'];
     icao = json['icao'];
     codeshared = json['codeshared'] != null
-        ? new Codeshared.fromJson(json['codeshared'])
+        ? Codeshared.fromJson(json['codeshared'])
         : null;
   }
 
@@ -301,7 +301,7 @@ class Flight {
     data['number'] = number;
     data['iata'] = iata;
     data['icao'] = icao;
-    if (this.codeshared != null) {
+    if (codeshared != null) {
       data['codeshared'] = codeshared!.toJson();
     }
     return data;
