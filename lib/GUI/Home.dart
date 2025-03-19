@@ -324,24 +324,47 @@ class _HomeState extends State<Home> {
                             ),
                             Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 45),
-                                  child: Text(flight.departure?.iata??"Unknown", style: const TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16
-                                  ),),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 30),
+                                    child: Text(
+                                      flight.departure?.iata ?? "Unknown",
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
                                 ),
-                                SizedBox(width: screenWidth * 0.21,),
-                                Text(flight.flight?.iata?? "Unknown", style: const TextStyle(
-                                  fontSize: 16
-                                ),),
-                                SizedBox(width: screenWidth * 0.2,),
-                                Text(flight.arrival?.iata?? "Unknow", style: const TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16
-                                ),)
+                                Expanded(
+                                  flex: 2,
+                                  child: Center(
+                                    child: Text(
+                                      flight.flight?.iata ?? "Unknown",
+                                      style: const TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 30),
+                                    child: Text(
+                                      flight.arrival?.iata ?? "Unknown",
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                      ),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             const Divider(
@@ -364,7 +387,7 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                                  Positioned(
-                                     right: screenWidth * 0.1, 
+                                     right: screenWidth * 0.08,
                                    child: Text('\$${flight.price?.toStringAsFixed(0) ?? 'N/A'}', style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
