@@ -5,6 +5,7 @@ import '../Home.dart';
 import 'Auth_Helper.dart';
 import 'Auth_Service.dart';
 import 'RegistrationPage.dart';
+import 'homePage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -317,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => const Home()),
+                  builder: (context) =>  HomePage()),
             );
           },
         );
@@ -360,7 +361,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Home()),
+                  builder: (context) => HomePage()),
             );
           },
         );

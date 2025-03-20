@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../API/Model.dart';
+import '../booking/PassengerContactFormScreen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -295,7 +296,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.only(bottom: 16),
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PassengerContactFormScreen()));
                     },
                     child: Stack(
                       children: [

@@ -5,7 +5,7 @@ import 'Model.dart';
 
 class ApiService {
   static String apiKey = "5c7a4aa3aa3fc784cdeb16f5e046313e";
-  static String apiUrl = "http://api.aviationstack.com/v1/flights?access_key=$apiKey&search=Nepal Airlines";
+  static String apiUrl = "http://api.aviationstack.com/v1/flights?access_key=$apiKey&search=NepalAirlines";
 
   static Future<List<Data>> fetchFlights() async {
     try {
