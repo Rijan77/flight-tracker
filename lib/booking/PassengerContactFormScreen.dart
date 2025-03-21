@@ -5,6 +5,8 @@ import 'package:esewa_flutter_sdk/esewa_payment.dart';
 import 'package:esewa_flutter_sdk/esewa_payment_success_result.dart';
 
 class PassengerContactFormScreen extends StatefulWidget {
+  const PassengerContactFormScreen({super.key});
+
   @override
   _PassengerContactFormScreenState createState() =>
       _PassengerContactFormScreenState();
@@ -235,7 +237,6 @@ class _PassengerContactFormScreenState
                         Center(
                           child: ElevatedButton(
                             onPressed: esewapaymentcall,
-                            child: Text('Proceed to Payment', style: TextStyle(color: Colors.white)),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blueAccent, // Use primary for button color
                               shape: RoundedRectangleBorder(
@@ -244,6 +245,7 @@ class _PassengerContactFormScreenState
                               padding: EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 15),
                             ),
+                            child: Text('Proceed to Payment', style: TextStyle(color: Colors.white)),
                           ),
                         ),
                       ],

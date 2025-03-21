@@ -11,7 +11,7 @@ class FlightSelectionScreen extends StatelessWidget {
   final int passengers;
 
   // Modified constructor
-  FlightSelectionScreen({
+  FlightSelectionScreen({super.key, 
     required this.from,
     required this.to,
     required this.departureDate,
@@ -95,12 +95,12 @@ class FlightSelectionScreen extends StatelessWidget {
               ),
               trailing: ElevatedButton(
                 onPressed: () => bookFlight(context, flight),
-                child: Text('Book Now'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
+                child: Text('Book Now'),
               ),
             ),
           );

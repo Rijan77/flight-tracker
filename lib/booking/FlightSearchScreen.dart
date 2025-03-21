@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'flight_selection_screen.dart'; // Make sure this file exists
 
 class FlightSearchScreen extends StatefulWidget {
+  const FlightSearchScreen({super.key});
+
   @override
   _FlightSearchScreenState createState() => _FlightSearchScreenState();
 }

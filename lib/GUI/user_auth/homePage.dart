@@ -3,6 +3,8 @@ import '../../UserProfile/userProfile.dart';
 import '../../booking/FlightSearchScreen.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -10,7 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  static List<Widget> _pages = <Widget>[
+  static final List<Widget> _pages = <Widget>[
     HomeScreen(),
     MyBookingScreen(),
   ];
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MyBookingScreen extends StatelessWidget {
-  const MyBookingScreen({Key? key}) : super(key: key);
+  const MyBookingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
