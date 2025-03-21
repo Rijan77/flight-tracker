@@ -241,7 +241,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         ),
                       ),
+
                       SizedBox(height: screenHeight * 0.02),
+
                       const Text(
                         "OR",
                         style: TextStyle(fontWeight: FontWeight.w800),
