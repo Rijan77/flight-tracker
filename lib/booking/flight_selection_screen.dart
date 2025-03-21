@@ -62,6 +62,7 @@ class FlightSelectionScreen extends StatelessWidget {
         title: Text('Select Flight'),
         backgroundColor: Color(0xff486C8F),
       ),
+
       body: filteredFlights.isEmpty
           ? Center(
         child: Text(
