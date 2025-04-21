@@ -1,3 +1,4 @@
+import 'package:flight_app/GUI/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'flight_selection_screen.dart'; // Make sure this file exists
@@ -77,12 +78,16 @@ class _FlightSearchScreenState extends State<FlightSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff7E9DCB),
       appBar: AppBar(
-        title: Text('Search Flights'),
-        backgroundColor: Colors.blueAccent,
+        title: Text('Search Flights', style: TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.w400
+        ),),
+        backgroundColor: Color(0xff7E9DCB),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 70),
         child: Container(
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -177,17 +182,22 @@ class _FlightSearchScreenState extends State<FlightSearchScreen> {
                 }).toList(),
                 onChanged: (count) => setState(() => passengers = count!),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 50),
               Center(
                 child: ElevatedButton(
-                  onPressed: searchFlights,
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.orange.shade400,
+                    foregroundColor: Colors.black,
                   ),
-                  child: Text('Search Flights'),
+                  child: Text('Search Flights', style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600
+                  ),),
 
                 ),
               ),

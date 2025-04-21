@@ -86,28 +86,32 @@ class _PassengerContactFormScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff7E9DCB),
       appBar: AppBar(
-        title: Text('Passenger Contact Form'),
-        backgroundColor: Colors.blueAccent,
+        title: Text('Passenger Contact', style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w400
+        ),),
+        backgroundColor: Color(0xff7E9DCB),
       ),
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 70),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue.shade100, Colors.blue.shade600],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          // gradient: LinearGradient(
+          //   colors: [Colors.blue.shade100, Colors.blue.shade600],
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          // ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Instruction Text
-            Text(
-              'The airline will contact you using the following information for any updates or queries regarding your flight.',
-              style: TextStyle(color: Colors.black, fontSize: 16),
-            ),
-            SizedBox(height: 20),
+            // Text(
+            //   'The airline will contact you using the following information for any updates or queries regarding your flight.',
+            //   style: TextStyle(color: Colors.black, fontSize: 16),
+            // ),
+            // SizedBox(height: 20),
 
             // Form to collect the passenger's contact information inside a Container
             Expanded(
@@ -116,7 +120,7 @@ class _PassengerContactFormScreenState
                   color: Colors.white.withOpacity(0.9),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.only(top: 60, left: 16.0, right: 16.0),
                 child: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
@@ -231,21 +235,25 @@ class _PassengerContactFormScreenState
                             }).toList(),
                           ),
 
-                        SizedBox(height: 10), // Reduced space between button and form
+                        SizedBox(height: 40), // Reduced space between button and form
 
                         // Submit Button
                         Center(
                           child: ElevatedButton(
                             onPressed: esewapaymentcall,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blueAccent, // Use primary for button color
+                              backgroundColor: Colors.orange.shade400, // Use primary for button color
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               padding: EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 15),
                             ),
-                            child: Text('Proceed to Payment', style: TextStyle(color: Colors.white)),
+                            child: Text('Proceed to Payment', style: TextStyle(
+                                color: Colors.black.withOpacity(0.8),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600
+                            )),
                           ),
                         ),
                       ],

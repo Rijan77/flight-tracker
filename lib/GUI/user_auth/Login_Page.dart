@@ -1,6 +1,9 @@
 import 'package:flight_app/GUI/user_auth/ForgotPassword.dart';
 import 'package:flutter/material.dart';
+import '../../booking/FlightSearchScreen.dart';
+import '../../booking/PassengerContactFormScreen.dart';
 import '../CustomDialog.dart';
+import '../Home.dart';
 import 'Auth_Helper.dart';
 import 'Auth_Service.dart';
 import 'RegistrationPage.dart';
@@ -360,7 +363,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => HomePage()),
+                  builder: (context) => FlightSearchScreen()),
             );
           },
         );
